@@ -1,6 +1,5 @@
 const express = require('express');
-const cluster = require('cluster');
-const os = require('os');
+
 const app = express();
 
 function delay(duration) {
@@ -29,15 +28,18 @@ app.get('/timer', (req, res) => {
 
 console.log(`Running server.js`);
 
-if (cluster.isMaster) {
-  console.log(`Master has been started...`);
-  const NUM_WORKERS = os.cpus().length;
-  // GET NUMBER OF LOGICAL CORES IN SERVER MACHINE
-  console.log('NUM_WORKERS', NUM_WORKERS);
-  for (let index = 0; index < NUM_WORKERS; index++) {
-    cluster.fork();
-  }
-} else {
-  console.log('Worker process started...');
-  app.listen(3000);
-}
+// if (cluster.isMaster) {
+//   console.log(`Master has been started...`);
+//   const NUM_WORKERS = os.cpus().length;
+//   // GET NUMBER OF LOGICAL CORES IN SERVER MACHINE
+//   console.log('NUM_WORKERS', NUM_WORKERS);
+//   for (let index = 0; index < NUM_WORKERS; index++) {
+//     cluster.fork();
+//   }
+// } else {
+//   console.log('Worker process started...');
+//   app.listen(3000);
+// }
+
+console.log('Worker process started...');
+app.listen(3000);
